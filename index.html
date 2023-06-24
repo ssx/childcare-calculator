@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/currency.js/dist/currency.min.js"></script>
+
+<div style="width: 500px; border: 2px solid #000; margin-left: auto; margin-right: auto; margin-top: 25%;">
+
+    <table style="width: 100%" cellpadding="10">
+        <tr>
+            <td>
+                Daily Rate
+            </td>
+            <td>
+                <input class="input_rate" type="number" value="52.50">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Days in Nursery
+            </td>
+            <td>
+                <input class="input_days" type="number" value="4">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Pay in
+            </td>
+            <td>
+                <input class="input_payin" type="number" value="168">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Total Cost
+            </td>
+            <td>
+                <span class="cost_total">&nbsp;</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                25% of Deposit
+            </td>
+            <td>
+                <span class="cost_bonus">&nbsp;</span>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                Total Paid in (Deposit + Credit)
+            </td>
+            <td>
+                <span class="cost_payin">&nbsp;</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button class="calculate">Calculate</button>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('input').on('change', function() {
+                let input_rate = currency($('.input_rate').val());
+                let input_days = parseInt($('.input_days').val());
+                let input_payin = currency($('.input_payin').val());
+                let input_bonus = currency(input_payin).multiply(0.25);
+
+                let cost_total = currency(input_rate).multiply(input_days);
+                $('.cost_total').html('&pound;' + cost_total);
+
+                $('.cost_bonus').html('&pound;' + input_bonus);
+
+                let cost_payin = currency(input_payin).add(input_bonus);
+                $('.cost_payin').html('&pound;' + cost_payin);
+            });
+
+            $('input').trigger('change');
+        });
+    </script>
+</div>
+
+</body>
+</html>
